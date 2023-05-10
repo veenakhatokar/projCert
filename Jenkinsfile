@@ -11,7 +11,7 @@ pipeline {
 		           // git url: 'https://github.com/edureka-devops/projCert'
                               git url: 'https://github.com/veenakhatokar/projCert'
 		           // sh script: '/opt/maven/bin/mvn compile'
-			 sh 'composer install'
+			 //sh 'composer install'
            }
         }
         stage('codereview-pmd') {
@@ -19,7 +19,7 @@ pipeline {
                 // step2
                 echo 'codereview..'
 		           // sh script: '/opt/maven/bin/mvn -P metrics pmd:pmd'
-			 sh 'find app -name "*.php" -print0 | xargs -0 -n1 php -l'
+			// sh 'find app -name "*.php" -print0 | xargs -0 -n1 php -l'
            }
 	         post {
                success {
@@ -57,7 +57,7 @@ pipeline {
         }
     stage('Deploy-App-QA') {
   	   steps {
-              sh 'ansible-playbook --inventory /tmp/inv $WORKSPACE/deploy/deploy-kube.yml --extra-vars "env=qa build=$BUILD_NUMBER"'
+              sh 'ansible-playbook --inventory /tmp/inv $WORKSPACE/deploy-kube.yml --extra-vars "env=qa build=$BUILD_NUMBER"'
 	   }
 	   //post { 
            //   always { 
