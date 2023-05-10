@@ -3,23 +3,23 @@
   tasks: 
     - name: Deploying Application pods...
       shell: | 
-         if [ `kubectl get deployment | grep -v NAME | awk '{print $1}' | grep projCert | wc -l` -gt 0 ]; then  
+         if [ `kubectl get deployment | grep -v NAME | awk '{print $1}' | grep projcert | wc -l` -gt 0 ]; then  
             echo "deleteing previous application deployment"
             kubectl delete deployment `kubectl get deployment | grep -v NAME | awk '{print $1}' | grep projCert`
             echo "creating new application deployment"
-            kubectl create deployment petclinic --image=veenakhatokar/projCert:{{ build }}
+            kubectl create deployment petclinic --image=veenakhatokar/projcert:{{ build }}
          else 
             echo "Deploying petclinic Application"
-            kubectl create deployment petclinic --image=veenakhatokar/projCert:{{ build }}
+            kubectl create deployment petclinic --image=veenakhatokar/projcert:{{ build }}
          fi
     - name: deploying service
       shell: |
          if [ `kubectl get svc | grep petclinic  | awk '{print $1}' | wc -l` -gt 0 ]; then
             echo "app service found, No actions taken"
-            #kubectl delete svc `kubectl get svc | grep projCert | awk '{print $1}'`
+            #kubectl delete svc `kubectl get svc | grep projcert | awk '{print $1}'`
          else
             echo "Creating App Services"
-            kubectl expose deployment projCert --name projCert --type NodePort --port 80 --target-port 8080
+            kubectl expose deployment projcert --name projCert --type NodePort --port 80 --target-port 8080
          fi
     - name: increase replicas 
       shell: kubectl scale deploy projCert --replicas=4
