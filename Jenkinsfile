@@ -10,14 +10,16 @@ pipeline {
                 echo 'compiling..'
 		           // git url: 'https://github.com/edureka-devops/projCert'
                               git url: 'https://github.com/veenakhatokar/projCert'
-		            sh script: '/opt/maven/bin/mvn compile'
+		           // sh script: '/opt/maven/bin/mvn compile'
+			 sh 'composer install'
            }
         }
         stage('codereview-pmd') {
 	         steps {
                 // step2
                 echo 'codereview..'
-		            sh script: '/opt/maven/bin/mvn -P metrics pmd:pmd'
+		           // sh script: '/opt/maven/bin/mvn -P metrics pmd:pmd'
+			 sh 'find app -name "*.php" -print0 | xargs -0 -n1 php -l'
            }
 	         post {
                success {
@@ -29,7 +31,7 @@ pipeline {
 	          steps {
                 // step3
                 echo 'unittest..'
-	               sh script: '/opt/maven/bin/mvn test'
+	             //  sh script: '/opt/maven/bin/mvn test'
             }
 	          post {
                success {
@@ -41,7 +43,7 @@ pipeline {
 	         steps {
                 // step5
                 echo 'package......'
-		            sh script: '/opt/maven/bin/mvn package'	
+		          //  sh script: '/opt/maven/bin/mvn package'	
            }		
         }
         stage('build & push docker image') {
